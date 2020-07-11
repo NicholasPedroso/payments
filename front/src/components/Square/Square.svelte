@@ -201,6 +201,7 @@
     
 
 </svelte:head>
+<a href="https://developer.squareup.com/docs/payment-form/overview" target="_blank">Documentação</a>
 <a href="https://squareupsandbox.com/dashboard/sales/transactions" target="_blank">Sandbox dashboard</a>
 <a href="https://developer.squareup.com/docs/testing/test-values#client-side-testing" target="_blank">valores de teste</a>
 <div style="display: flex; align-items: center; flex-direction: column;">
@@ -252,7 +253,6 @@
       </pre>
       
 </div>
-
 
 <style>
     * {

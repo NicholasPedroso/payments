@@ -146,7 +146,7 @@
 </main>
 
 {#if doingCheckout && selectedIntegrationType}
-	<svelte:component this={selectedIntegrationType.component} totalCheckout={totalCheckout}/>
+	<svelte:component this={selectedIntegrationType.component} {totalCheckout} {chartProducts}/>
 {/if}
 
 <style>
