@@ -1,9 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
-	import Square from './components/Square/Square.svelte';
-	import Adyen from './components/Adyen/Adyen.svelte';
-	import Paypall from './components/Paypall/Paypall.svelte';
 	import Stripe from './components/Stripe/Stripe.svelte';
+	import Square from './components/Square/Square.svelte';
+	import PagSeguro from './components/PagSeguro/PagSeguro.svelte';
+	import MercadoPago from './components/MercadoPago/MercadoPago.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 
@@ -20,21 +20,21 @@
 
 	let integrationType = [
 		{
+			name: 'stripe',
+			component: Stripe
+		},
+		{
 			name: 'square',
 			component: Square
 		},
 		{
-			name: 'adyen',
-			component: Adyen
+			name: 'PagSeguro',
+			component: PagSeguro
 		},
 		{
-			name: 'paypall',
-			component: Paypall
+			name: 'MercadoPago',
+			component: MercadoPago
 		},
-		{
-			name: 'stripe',
-			component: Stripe
-		}
 	];
 	let selectedIntegrationType;
 
