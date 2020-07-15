@@ -84,7 +84,7 @@
 	</div>
 
 	{#if doingCheckout}
-		<img style="height: 40px;" src={`/images/${selectedIntegrationType.name}.png`} alt={selectedIntegrationType.name}/>
+		<img style="max-width: 140px; max-height: 60px;" src={`/images/${selectedIntegrationType.name}.png`} alt={selectedIntegrationType.name}/>
 	{:else}
 		<div>
 			<div style="display: flex; justify-content: center;">

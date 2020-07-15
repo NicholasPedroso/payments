@@ -1,3 +1,6 @@
+const https = require('https');
+const fs = require('fs');
+const cors = require('cors');
 const express = require('express')
 const app = express();
 const path = require('path');
@@ -5,7 +8,9 @@ const bodyParser = require('body-parser');
 
 const squareRoute = require('./routes/square')
 const stripeRoute = require('./routes/stripe')
+const pagSeguroRoute = require('./routes/pagseguro')
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -17,5 +22,11 @@ app.get('/', (req, res) => {
 
 app.use('/square', squareRoute)
 app.use('/stripe', stripeRoute)
+app.use('/pagseguro', pagSeguroRoute);
 
-app.listen(3000, () => console.log('Listening on port 3000'));
+https.createServer({
+    key: fs.readFileSync('./key.pem'),
+    cert: fs.readFileSync('./cert.pem'),
+    passphrase: 'nick'
+}, app)
+.listen(443);
