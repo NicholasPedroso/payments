@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const squareRoute = require('./routes/square')
 const stripeRoute = require('./routes/stripe')
 const pagSeguroRoute = require('./routes/pagseguro')
+const mercadoPagoRoute = require('./routes/mercadopago')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 app.use('/square', squareRoute)
 app.use('/stripe', stripeRoute)
 app.use('/pagseguro', pagSeguroRoute);
+app.use('/mercadopago', mercadoPagoRoute);
 
 https.createServer({
     key: fs.readFileSync('./key.pem'),
