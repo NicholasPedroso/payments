@@ -1,0 +1,55 @@
+Mercadopago.setPublishableKey()
+Mercadopago.getIdentificationTypes()
+Mercadopago.getInstallments()
+Mercadopago.getPaymentMethod()
+Mercadopago.createToken()
+
+
+
+
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    const myForm = new MercadoPago.Form({
+        formID: '#paymentForm',
+        publishableKey: 'ad283u29fjj8923...',
+        card: {
+            id: 'cardNumber',
+            placeholder: '• • •  • • •  • •',
+        },
+        expirationDate: {
+            id: 'expirationDate',
+            placeholder: 'YYYY/mm/dd',
+        },
+        CVV: {
+            id: 'CVV',
+            placeholder: '999',
+            validation: false,
+        },
+        autoBuild: true,
+
+        // custom events
+        events: {
+            tokenReceived: (erros, token) => {
+                if (erros) { errors.forEach(error => console.error(error.message)); return; }
+                fetch('/myServer', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                    body: JSON.stringify({transaction_amount,token,installments,email})
+                }) 
+            },
+            inputEvent: inputEvent => console.log(inputEvent.field),
+            browserIsNotSupported: _ => console.log('Browser not supported'),
+            formIsReady: _ => console.log('Form is ready')
+        },
+    });
+
+    // tokenize callback can be handled in events.tokenReceived
+    const handleSubmit = (e) => e.preventDefault(); myForm.getCardToken();
+</script>
+
+<form id="paymentForm" action="/path">
+    <input id="cardNumber"></input>
+    <input id="dateExpiration"></input>
+    <input id="CVV"></input>
+    <button type="submit" onclick="handleSubmit()">Pagar</button>
+</form>

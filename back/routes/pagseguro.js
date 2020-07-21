@@ -1,11 +1,9 @@
 const express = require('express');
 const Router = express.Router()
 const axios = require('axios');
+const { tokenSandbox, emailSandbox } = require('../config').pagseguro;
 
 const PAGSEGURO_HOST = 'https://ws.sandbox.pagseguro.uol.com.br/v2'
-
-const tokenSandbox = 'FD943F0023724FF9A648C3E73DAD5133';
-const emailSandbox = 'nicholas.c.pedroso@gmail.com';
 
 Router.post('/', (req, res) => {
     const params = req.body;

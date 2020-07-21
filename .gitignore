@@ -1,5 +1,6 @@
 /front/node_modules/
 /back/node_modules/
+/back/config.js
 /front/public/build/
 
 .DS_Store
