@@ -1,6 +1,5 @@
 # payments
-Payment Integration
-Benchmark for payments integrations (square, stripe, pagseguro, mercadopago)
+Payment Integration Benchmark (square, stripe, pagseguro, mercadopago)
 
 Front end Built with svelte
 Backend built with nodeJS and express
