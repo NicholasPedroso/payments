@@ -18,6 +18,7 @@
 
     $: if (SDKIsReady && componentIsReady) {
         Mercadopago.setPublishableKey('TEST-f4878fc9-a7db-4e55-b05c-bc58f41849bb');
+        // Mercadopago.setPublishableKey('APP_USR-ca470e56-a6da-4b9d-b03e-75407e1f32ac');
         Mercadopago.getIdentificationTypes();
     }
 
@@ -43,7 +44,7 @@
 
     function sdkResponseHandler(status, response) {
         if (status != 200 && status != 201) {
-            console.log("verify filled data");
+            console.log("verify filled data", response);
         } else { 
             cardToken = response.id;
             fetch('/mercadopago', {
@@ -73,7 +74,7 @@
                 return response.json(); //UPDATE HERE
             })
             .then(data => paymentStatus = data)
-            .catch(err => paymentStatus = JSON.parse(err.result));
+            .catch(err => paymentStatus = err);
 
         }
     };
@@ -81,9 +82,9 @@
     function setPaymentMethod(status, response) {
         if (status == 200) {
             paymentMethodId = response[0].id;
-            getInstallments();
+            response[0].additional_info_needed.includes("issuer_id") ? getInstallments() : getIssuers(paymentMethodId);
         } else {
-            alert(`payment method info error: ${response}`);
+            console.log(`payment method info error: ${response}`);
         }
     }
 
@@ -96,10 +97,37 @@
             if (status == 200) {
                 installments = response[0].payer_costs;
             } else {
-                alert(`installments method info error: ${response}`);
+                console.log(`installments method info error: ${response}`);
             }
         });
     }
+
+    function getIssuers(paymentMethodId) {
+   window.Mercadopago.getIssuers(
+       paymentMethodId,
+       setIssuers
+   );
+}
+
+function setIssuers(status, response) {
+   if (status == 200) {
+       let issuerSelect = document.getElementById('issuer');
+       response.forEach( issuer => {
+           let opt = document.createElement('option');
+           opt.text = issuer.name;
+           opt.value = issuer.id;
+           issuerSelect.appendChild(opt);
+       });
+
+       getInstallments(
+           document.getElementById('paymentMethodId').value,
+           document.getElementById('transactionAmount').value,
+           issuerSelect.value
+       );
+   } else {
+       console.log(`issuers method info error: ${response}`);
+   }
+}
 
 
 
@@ -107,7 +135,9 @@
 
 <svelte:head>
     <script type="text/javascript" on:load={SDKLoaded}
-        src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+        src="https://secure.mlstatic.com/sdk/javascript/beta/v1/mercadopago.js?version=1324232"></script>
+    <!-- <script type="text/javascript" on:load={SDKLoaded}
+        src="http://localhost:8000/mercadopago.debug.js"></script> -->
 </svelte:head>
 <a href="https://www.mercadopago.com.br/developers/pt/guides/payments/api/receiving-payment-by-card/"
     target="_blank">Documentação</a>
@@ -172,7 +202,13 @@
                 <label for="email">E-mail</label>
                 <input bind:value={userMail} type="email" id="email" name="email" placeholder="test@test.com" />
             </p>
-            <input type="hidden" name="payment_method_id" id="payment_method_id" />
+            <p>
+                <label for="issuer">E-mail</label>
+                <select type="issuer" id="issuer" name="issuer" ></select>
+            </p>
+            <input type="hidden" name="transactionAmount" id="transactionAmount" value="100" />
+            <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
+            <input type="hidden" name="description" id="description" />
             <input type="submit" on:click|preventDefault={handleSubmit} value="Pagar" />
         </fieldset>
     </form>

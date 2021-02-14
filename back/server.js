@@ -26,9 +26,11 @@ app.use('/stripe', stripeRoute)
 app.use('/pagseguro', pagSeguroRoute);
 app.use('/mercadopago', mercadoPagoRoute);
 
-https.createServer({
-    key: fs.readFileSync('./key.pem'),
-    cert: fs.readFileSync('./cert.pem'),
-    passphrase: 'nick'
-}, app)
-.listen(443);
+// https.createServer({
+//     key: fs.readFileSync('./key.pem'),
+//     cert: fs.readFileSync('./cert.pem'),
+//     passphrase: 'nick'
+// }, app)
+// .listen(4433);
+
+app.listen(4433, () => console.log('App is listening on 4433'))

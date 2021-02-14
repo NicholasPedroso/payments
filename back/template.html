@@ -1,17 +1,15 @@
-Mercadopago.setPublishableKey()
-Mercadopago.getIdentificationTypes()
-Mercadopago.getInstallments()
-Mercadopago.getPaymentMethod()
-Mercadopago.createToken()
-
-
-
+    setPublicKey(YOUR_PUBLIC_KEY)
+    getIdentificationTypes(callback);
+    getInstallments(object, callback);
+    getPaymentMethod(object,callback);
+    getIssuers(id, callback)
+    createToken($form, sdkResponseHandler)
 
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script>
     const myForm = new MercadoPago.Form({
         formID: '#paymentForm',
-        publishableKey: 'ad283u29fjj8923...',
+        publicKey: 'ad283u29fjj8923...',
         card: {
             id: 'cardNumber',
             placeholder: '• • •  • • •  • •',
@@ -29,13 +27,26 @@ Mercadopago.createToken()
 
         // custom events
         events: {
-            tokenReceived: (erros, token) => {
+            onPublicKeyError: ((error) => {
+                console.error(error.message)
+            }),
+            onTokenReceived: (erros, token) => {
                 if (erros) { errors.forEach(error => console.error(error.message)); return; }
                 fetch('/myServer', {
                     method: 'POST',
                     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                     body: JSON.stringify({transaction_amount,token,installments,email})
                 }) 
+            },
+            onIssuersReceived:(errors, issuers) => {
+                if (erros) { errors.forEach(error => console.error(error.message)); return; }
+
+            },
+            onIdentificationTypesReceived: (errors, identificationsTypes) => {  
+                if (erros) { errors.forEach(error => console.error(error.message)); return; }
+            },
+            onInstallmentsReceived: (errors, identificationsTypes) => {
+                if (erros) { errors.forEach(error => console.error(error.message)); return; }
             },
             inputEvent: inputEvent => console.log(inputEvent.field),
             browserIsNotSupported: _ => console.log('Browser not supported'),
@@ -44,7 +55,7 @@ Mercadopago.createToken()
     });
 
     // tokenize callback can be handled in events.tokenReceived
-    const handleSubmit = (e) => e.preventDefault(); myForm.getCardToken();
+    const handleSubmit = (e) => e.preventDefault(); myForm.createToken();
 </script>
 
 <form id="paymentForm" action="/path">
