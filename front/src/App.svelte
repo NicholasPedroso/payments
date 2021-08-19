@@ -1,12 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import Stripe from './components/Stripe/Stripe.svelte';
-	import Square from './components/Square/Square.svelte';
-	import PagSeguro from './components/PagSeguro/PagSeguro.svelte';
-	import MercadoPago from './components/MercadoPago/MercadoPago.svelte';
-	import MercadoPagoV2 from './components/MercadoPago/MercadoPagoV2.svelte';
+	// import Square from './components/Square/Square.svelte';
+	// import PagSeguro from './components/PagSeguro/PagSeguro.svelte';
+	// import MercadoPago from './components/MercadoPago/MercadoPago.svelte';
+	// import MercadoPagoV2 from './components/MercadoPago/MercadoPagoV2.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+import Braintree from './components/Braintree/Braintree.svelte';
 
 	onMount(() => {
 		const URL = new URLSearchParams(window.location.search);
@@ -25,21 +26,25 @@
 			component: Stripe
 		},
 		{
-			name: 'square',
-			component: Square
+			name: 'braintree',
+			component: Braintree
 		},
-		{
-			name: 'PagSeguro',
-			component: PagSeguro
-		},
-		{
-			name: 'MercadoPago',
-			component: MercadoPago
-		},
-		{
-			name: 'MercadoPagoV2',
-			component: MercadoPagoV2
-		},
+		// {
+		// 	name: 'square',
+		// 	component: Square
+		// },
+		// {
+		// 	name: 'PagSeguro',
+		// 	component: PagSeguro
+		// },
+		// {
+		// 	name: 'MercadoPago',
+		// 	component: MercadoPago
+		// },
+		// {
+		// 	name: 'MercadoPagoV2',
+		// 	component: MercadoPagoV2
+		// },
 	];
 	let selectedIntegrationType;
 

@@ -41,7 +41,7 @@
               iconColor: "#fa755a"
             }
           };
-          var card = elements.create("card", { style: style });
+          var card = elements.create("cardNumber", { style: style, placeholder: 'hi' });
           // Stripe injects an iframe into the DOM
           card.mount("#card-element");
           card.on("change", function (event) {
