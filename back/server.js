@@ -33,6 +33,6 @@ https.createServer({
     cert: fs.readFileSync('./cert.pem'),
     passphrase: 'nick'
 }, app)
-.listen(4433);
+.listen(4433, () => console.log('Server is ready'));
 
 // app.listen(4433, () => console.log('App is listening on 4433'))
