@@ -15,7 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mercadopago": "^1.5.3",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.20",
     "platform-folders": "^0.5.2",
     "square-connect": "^4.20200625.0",
     "stripe": "^8.69.0"
